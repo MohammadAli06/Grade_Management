@@ -14,12 +14,9 @@
         android:theme="@style/Theme.Grade_management"
         tools:targetApi="31">
         <activity
-            android:name=".studentActivity"
-            android:exported="false"
+            android:name=".StudentActivity"
+            android:exported="true"
             android:label="@string/title_activity_student" />
-        <activity
-            android:name=".DashboardActivity"
-            android:exported="false" />
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />

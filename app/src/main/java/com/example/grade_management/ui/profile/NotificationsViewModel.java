@@ -1,4 +1,4 @@
-package com.example.grade_management.ui.notifications;
+package com.example.grade_management.ui.profile;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

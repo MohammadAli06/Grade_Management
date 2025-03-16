@@ -1,13 +1,14 @@
 {
   "project_info": {
-    "project_number": "435315970295",
-    "project_id": "grade-management-f7dab",
-    "storage_bucket": "grade-management-f7dab.firebasestorage.app"
+    "project_number": "1090614322677",
+    "firebase_url": "https://grademanagejava-default-rtdb.firebaseio.com",
+    "project_id": "grademanagejava",
+    "storage_bucket": "grademanagejava.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:435315970295:android:7bf4010598d05c9685c3f2",
+        "mobilesdk_app_id": "1:1090614322677:android:a73c020b66c3cb95896cbc",
         "android_client_info": {
           "package_name": "com.example.grade_management"
         }
@@ -15,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBQSwXpl7RkSOR-pzrKFR2ZrobXA4mVhns"
+          "current_key": "AIzaSyBvANuAck6go-lv0eKXgui5TYElB8Yh8e0"
         }
       ],
       "services": {

@@ -3,7 +3,6 @@ package com.example.grade_management;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -73,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(MainActivity.this, studentActivity.class));
+            Intent intent = new Intent(MainActivity.this, StudentActivity.class);
+            startActivity(intent);
             finish();
         }
     }
