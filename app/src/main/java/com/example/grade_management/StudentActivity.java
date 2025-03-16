@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.grade_management.ui.add.DashboardFragment;
+import com.example.grade_management.ui.attendance.DashboardFragment;
 import com.example.grade_management.ui.home.HomeFragment;
 import com.example.grade_management.ui.profile.NotificationsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

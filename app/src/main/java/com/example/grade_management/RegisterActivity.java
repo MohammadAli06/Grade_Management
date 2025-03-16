@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText emailRegister, pswdRegister, confirmPswdRegister;
+    private EditText emailRegister, pswdRegister, confirmPswdRegister, nameRegister;
     private RadioGroup roleGroup;
     private Button btnRegister;
     private TextView tvLogin;
@@ -38,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         // Get UI Elements
+        nameRegister = findViewById(R.id.nameInputReg);
         emailRegister = findViewById(R.id.emailInputReg);
         pswdRegister = findViewById(R.id.pswdInputReg);
         confirmPswdRegister = findViewById(R.id.cnfrmPswdInputReg);
@@ -56,6 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
+        String name = nameRegister.getText().toString().trim();
         String email = emailRegister.getText().toString().trim();
         String password = pswdRegister.getText().toString().trim();
         String confirmPassword = confirmPswdRegister.getText().toString().trim();
@@ -68,6 +70,11 @@ public class RegisterActivity extends AppCompatActivity {
         RadioButton selectedRoleButton = findViewById(selectedRoleId);
         String role = selectedRoleButton.getText().toString().trim();
 
+        if (TextUtils.isEmpty(name)) {
+            nameRegister.setError("Name is required");
+            nameRegister.requestFocus();
+            return;
+        }
         if (TextUtils.isEmpty(email)) {
             emailRegister.setError("Email is required");
             emailRegister.requestFocus();
@@ -96,7 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Log.d("RegisterActivity", "createUserWithEmail:success");
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user != null) {
-                            saveUserToFirestore(user.getUid(), email, role);
+                            saveUserToFirestore(user.getUid(), name, email, role);
                         }
                     } else {
                         Exception e = task.getException();
@@ -107,11 +114,12 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }
 
-    private void saveUserToFirestore(String uid, String email, String role) {
+    private void saveUserToFirestore(String uid, String name, String email, String role) {
         Map<String, Object> userData = new HashMap<>();
+        userData.put("uid", uid);
+        userData.put("name", name);
         userData.put("email", email);
         userData.put("role", role);
-        userData.put("uid", uid);
 
         db.collection("users").document(uid)
                 .set(userData)

@@ -3,14 +3,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.home.HomeFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/homeToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/iconAnnouncements"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end"
+            android:padding="8dp"
+            android:src="@drawable/ic_notifications_black_24dp" />
+    </androidx.appcompat.widget.Toolbar>
+
     <TextView
+        android:id="@+id/tvWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home Fragment"
-        android:textSize="25dp"
-        android:layout_centerInParent="true"/>
+        android:text="Welcome, Student!"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
 
+    <TextView
+        android:id="@+id/tvGradeOverview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Overall GPA: "
+        android:textSize="18sp"
+        android:layout_below="@id/tvWelcome"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"/>
+
+    <ListView
+        android:id="@+id/listGrades"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@id/tvGradeOverview"
+        android:layout_margin="10dp"
+        android:background="#E0E0E0"/>
 
 </RelativeLayout>

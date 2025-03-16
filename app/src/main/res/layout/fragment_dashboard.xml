@@ -1,16 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.add.DashboardFragment">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center"
+    tools:context=".ui.attendance.DashboardFragment">
 
+    <!-- Attendance Summary -->
+    <TextView
+        android:id="@+id/tvAttendanceSummary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Attendance: 0%"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:padding="8dp"
+        android:gravity="center"/>
+
+    <!-- Circular Progress Bar (Replaces Pie Chart) -->
+    <ProgressBar
+        android:id="@+id/progressAttendance"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+        android:indeterminateOnly="false"
+        android:max="100"
+        android:progress="0"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Subject-wise Attendance List -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Fragment"
-        android:textSize="25dp"
-        android:layout_centerInParent="true"/>
+        android:text="Subject-wise Attendance"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:paddingTop="10dp"/>
 
-
-</RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerAttendance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

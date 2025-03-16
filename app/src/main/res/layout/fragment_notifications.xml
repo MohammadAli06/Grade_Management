@@ -6,11 +6,54 @@
     tools:context=".ui.profile.NotificationsFragment">
 
     <TextView
+        android:id="@+id/tvProfileHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Profile Fragment"
-        android:textSize="25dp"
-        android:layout_centerInParent="true"/>
+        android:text="User Profile"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
 
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name: Loading..."
+        android:textSize="18sp"
+        android:layout_below="@id/tvProfileHeader"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"/>
 
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email: Loading..."
+        android:textSize="18sp"
+        android:layout_below="@id/tvName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"/>
+
+    <TextView
+        android:id="@+id/tvRole"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Role: Loading..."
+        android:textSize="18sp"
+        android:layout_below="@id/tvEmail"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"/>
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:textSize="16sp"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:textColor="@android:color/white"
+        android:layout_below="@id/tvRole"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"/>
 </RelativeLayout>
