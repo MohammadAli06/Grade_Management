@@ -21,15 +21,16 @@ import com.example.grade_management.AnnouncementActivity;
 import com.example.grade_management.R;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private TextView tvWelcome, tvGradeOverview;
-    private ListView listGrades;
-    private ArrayAdapter<String> gradesAdapter;
-    private ArrayList<String> gradesList;
+    private ListView listGrades, listCourses;
+    private ArrayAdapter<String> gradesAdapter, coursesAdapter;
+    private ArrayList<String> gradesList, coursesList;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,11 +40,16 @@ public class HomeFragment extends Fragment {
         tvWelcome = root.findViewById(R.id.tvWelcome);
         tvGradeOverview = root.findViewById(R.id.tvGradeOverview);
         listGrades = root.findViewById(R.id.listGrades);
+        listCourses = root.findViewById(R.id.listCourses);
 
-        // Set up the ListView and adapter
+        // Set up the ListView and adapters
         gradesList = new ArrayList<>();
         gradesAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, gradesList);
         listGrades.setAdapter(gradesAdapter);
+
+        coursesList = new ArrayList<>();
+        coursesAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, coursesList);
+        listCourses.setAdapter(coursesAdapter);
 
         // Handle announcements icon click
         ImageView iconAnnouncements = root.findViewById(R.id.iconAnnouncements);
@@ -55,16 +61,17 @@ public class HomeFragment extends Fragment {
         // Initialize ViewModel
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
-        // Observe LiveData
+        // Observe LiveData for student name
         homeViewModel.getStudentName().observe(getViewLifecycleOwner(), name -> {
             tvWelcome.setText("Welcome, " + name + "!");
         });
 
+        // Observe LiveData for GPA
         homeViewModel.getGpa().observe(getViewLifecycleOwner(), gpa -> {
             tvGradeOverview.setText(gpa);
         });
 
-        // Observe grades and update the ListView
+        // Observe LiveData for grades and update the ListView
         homeViewModel.getGrades().observe(getViewLifecycleOwner(), grades -> {
             gradesList.clear();
             if (grades != null) {
@@ -82,6 +89,22 @@ public class HomeFragment extends Fragment {
                 Log.e(TAG, "Grades data is null");
             }
             gradesAdapter.notifyDataSetChanged();
+        });
+
+        // Observe LiveData for enrolled courses and update the ListView
+        homeViewModel.getEnrolledCourses().observe(getViewLifecycleOwner(), courses -> {
+            coursesList.clear();
+            if (courses != null) {
+                for (HomeViewModel.Course course : courses) {
+                    String courseDetails = course.getCourseName() + " - " +
+                            (course.getTeacher() != null ? course.getTeacher() : "Unknown Teacher") +
+                            " (" + course.getCredits() + " credits)";
+                    coursesList.add(courseDetails);
+                }
+            } else {
+                Log.e(TAG, "Courses data is null");
+            }
+            coursesAdapter.notifyDataSetChanged();
         });
 
         return root;

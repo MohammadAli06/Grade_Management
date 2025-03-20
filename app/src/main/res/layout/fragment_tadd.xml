@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.tadd.AddFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_gravity="center">
+
+        <!-- Student Dropdown -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Student:"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerStudents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Teacher ID -->
+        <TextView
+            android:id="@+id/tvTeacherId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Teacher ID: "
+            android:textSize="18sp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Dynamic EditText Fields for Subjects -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter Grades:"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:id="@+id/containerGrades"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+            <!-- EditText fields will be added here dynamically -->
+        </LinearLayout>
+
+        <!-- Add Grade Button -->
+        <Button
+            android:id="@+id/btnAddGrade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Grade"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+</ScrollView>

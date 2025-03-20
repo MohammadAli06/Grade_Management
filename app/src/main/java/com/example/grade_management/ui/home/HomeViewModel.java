@@ -14,6 +14,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class HomeViewModel extends ViewModel {
@@ -24,6 +26,8 @@ public class HomeViewModel extends ViewModel {
     private final MutableLiveData<String> name = new MutableLiveData<>();
     private final MutableLiveData<String> role = new MutableLiveData<>();
     private final MutableLiveData<String> gpa = new MutableLiveData<>("Overall GPA: Calculating...");
+    private final MutableLiveData<Map<String, Object>> grades = new MutableLiveData<>();
+    private final MutableLiveData<List<Course>> enrolledCourses = new MutableLiveData<>();
 
     public HomeViewModel() {
         mAuth = FirebaseAuth.getInstance();
@@ -41,17 +45,18 @@ public class HomeViewModel extends ViewModel {
                         if (documentSnapshot.exists()) {
                             String name = documentSnapshot.getString("name");
                             studentName.setValue(name);
+
+                            // Fetch enrolled courses
+                            List<String> courseIds = (List<String>) documentSnapshot.get("enrolledCourses");
+                            if (courseIds != null) {
+                                fetchCourseDetails(courseIds);
+                            }
                         }
                     })
                     .addOnFailureListener(e -> studentName.setValue("Student"));
         }
     }
 
-    private final MutableLiveData<Map<String, Object>> grades = new MutableLiveData<>();
-
-    public LiveData<Map<String, Object>> getGrades() {
-        return grades;
-    }
     public LiveData<String> getStudentName() {
         return studentName;
     }
@@ -66,6 +71,14 @@ public class HomeViewModel extends ViewModel {
 
     public LiveData<String> getGpa() {
         return gpa;
+    }
+
+    public LiveData<Map<String, Object>> getGrades() {
+        return grades;
+    }
+
+    public LiveData<List<Course>> getEnrolledCourses() {
+        return enrolledCourses;
     }
 
     private void loadUserProfile() {
@@ -158,18 +171,67 @@ public class HomeViewModel extends ViewModel {
         gpa.setValue("Overall GPA: " + String.format("%.2f", averageScore));
     }
 
-    private double convertGradeToPoints(String grade) {
-        switch (grade) {
-            case "A":
-                return 4.0;
-            case "B":
-                return 3.0;
-            case "C":
-                return 2.0;
-            case "D":
-                return 1.0;
-            default:
-                return 0.0;
+    private void fetchCourseDetails(List<String> courseIds) {
+        List<Course> courses = new ArrayList<>();
+        for (String courseId : courseIds) {
+            db.collection("courses").document(courseId)
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            // Fetch course details
+                            String courseName = documentSnapshot.getString("courseName");
+                            String description = documentSnapshot.getString("description");
+                            String teacher = documentSnapshot.getString("teacher");
+                            int credits = documentSnapshot.getLong("credits") != null ? documentSnapshot.getLong("credits").intValue() : 0;
+                            // Handle null or missing teacher field
+                            if (teacher == null) {
+                                teacher = "Unknown Teacher";
+                            }
+
+                            // Create Course object
+                            Course course = new Course(courseName, description, teacher, credits);
+                            courses.add(course);
+
+                            // Update LiveData
+                            enrolledCourses.setValue(courses);
+                        } else {
+                            Log.e(TAG, "Course document does not exist: " + courseId);
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e(TAG, "Error fetching course: " + e.getMessage());
+                    });
+        }
+    }
+
+    // Course model class
+    public static class Course {
+        private String courseName;
+        private String description;
+        private String teacher;
+        private int credits;
+
+        public Course(String courseName, String description, String teacher, int credits) {
+            this.courseName = courseName;
+            this.description = description;
+            this.teacher = teacher;
+            this.credits = credits;
+        }
+
+        public String getCourseName() {
+            return courseName;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public String getTeacher() {
+            return teacher;
+        }
+
+        public int getCredits() {
+            return credits;
         }
     }
 }

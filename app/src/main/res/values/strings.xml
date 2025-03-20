@@ -2,8 +2,10 @@
     <string name="app_name">Grade_management</string>
     <string name="title_activity_student">studentActivity</string>
     <string name="title_home">Home</string>
-    <string name="title_add">Attendance</string>
+    <string name="title_attendance">Attendance</string>
+    <string name="title_add">Add</string>
     <string name="title_profile">Profile</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_activity_teacher">TeacherActivity</string>
 </resources>
